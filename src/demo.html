@@ -1,0 +1,115 @@
+<div className="w-full">
+    {/* video */}
+    <div className="relative">
+      <video
+        width="100%"
+        height="100%"
+        className="object-cover h-screen"
+        autoPlay
+        muted
+        loop
+      >
+        <source src="/goa_video.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 top-0 left-0 bg-yellow-800/20"></div>
+    </div>
+    {/* logo */}
+    <div className="absolute inset-0 pt-4">
+      <img
+        className="relative w-36 lg:w-52 h-auto"
+        src="images/img_projectaccomplishments.png"
+        alt="projectaccompli"
+      />
+    </div>
+
+    {/* Hero Text */}
+    {/* <div className="relative z-50"> */}
+    <div className="absolute bottom-[0] w-full">
+      <div className="flex justify-center items-center gap-y-10 md:gap-y-20 flex-col">
+        <div
+          className="ml-10 lg:ml-0"
+          style={{
+            textShadow: "0px 4px  4px #00000094",
+          }}
+        >
+          <h1 className="text-xlg text-shadow-ts1 sm:text-xl font-montserrat font-medium text-white-A700 tracking-[14.10px] uppercase">
+            Bsides Goa 2024
+          </h1>
+          <p className="text-lg text-white-A700 font-semibold text-shadow-ts1">
+            <span className="border-2 border-yellow-800 w-16 sm:w-40 inline-block"></span>
+            &nbsp; Security by the Beach
+          </p>
+        </div>
+
+        {/* Social Icons */}
+        <div className="hidden absolute md:right-10  xl:right-20 top-0 lg:flex pr-10 md: flex-col gap-y-8 mt-14 pb-10">
+          <a
+            href="https://www.instagram.com/bsidesgoa/"
+            target="_blank"
+            className=""
+          >
+            <img src={Instagram} alt="Instagram_Icon" />
+          </a>
+          <a href="https://www.facebook.com/bsidesgoa" target="_blank">
+            <img src={Facebook} alt="Facebook_icon" />
+          </a>
+          <a href="mailto:admin@bsidesgoa.com" target="_blank">
+            <img src={Gmail} alt="Gmail_icon" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/bsidesgoa/about/"
+            target="_blank"
+          >
+            <img src={Linkedin} alt="Linkedin_icon" />
+          </a>
+        </div>
+        {/* Calender */}
+        <div className="w-full pb-4 relativ bg-gradien">
+          <div className="sm:flex gap-x-2 md:gap-10 justify-between items-end lg:px-32 px-4 md:px-10">
+            <div
+              className="bg-cover"
+              style={{
+                backgroundImage: "url('images/blurbg.png')",
+                // backgroundColor: "#F9A11E",
+              }}
+            >
+              <img src="/images/bsides_calendar.svg" />
+            </div>
+            <p
+              className="mt-6 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700"
+              style={{
+                textShadow: "0px 4px  4px #00000094",
+              }}
+            >
+              Dates to be announced soon <br /> Stay tuned...
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/* </div> */}
+
+
+
+  {/* Calender */}
+  {/* <div className="w-full pb-4 pt-10">
+    <div className="sm:flex gap-x-2 md:gap-10 justify-between items-end lg:px-32 px-4 md:px-10">
+      <div
+        className="bg-cover"
+        style={{
+          backgroundImage: "url('images/blurbg.png')",
+        }}
+      >
+        <img src="/images/bsides_calendar.svg" />
+      </div>
+      <p
+        className="mt-6 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700"
+        style={{
+          textShadow: "0px 4px  4px #00000094",
+        }}
+      >
+        Dates to be announced soon <br /> Stay tuned...
+      </p>
+    </div>
+  </div> */}
