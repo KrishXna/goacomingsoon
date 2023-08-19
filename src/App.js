@@ -40,7 +40,6 @@ function App() {
     formData.forEach(function (value, key) {
       formDataObj[key] = value;
     });
-
     const { name, email, contactno, interested, companyname } = formDataObj;
 
     if (!name || !email || !contactno || !interested || !companyname) {
@@ -51,11 +50,11 @@ function App() {
 
       client
         .setEndpoint("https://cloud.appwrite.io/v1")
-        .setProject("64d6237bb379a46371cf");
+        .setProject("64e0a33e578d27304431");
 
       const promise = databases.createDocument(
-        "64d623c67b505fe527f8",
-        "64d623db1568f8317071",
+        "64e0b5345a71b49502ef",
+        "64e0b54f37f4d6647307",
         ID.unique(),
         formDataObj
       );
@@ -96,11 +95,11 @@ function App() {
 
       client
         .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-        .setProject("64d631f1d0fa16b6af53"); // Your project ID
+        .setProject("64e0b814f305bd5fd645"); // Your project ID
 
       const promise = databases.createDocument(
-        "64d6322705f1dd83626b",
-        "64d6322ce92299e0ce84",
+        "64e0b827d964dcca3a18",
+        "64e0b82fae2c7e08f228",
         ID.unique(),
         formDataObj
       );
@@ -162,17 +161,17 @@ function App() {
               {/* Social Icons */}
               <div className="absolute right-10 xl:right-36">
                 <div className="hidden lg:flex flex-col gap-y-8 pt-8 justify-center items-center">
-                  <a
+                  {/* <a
                     href="https://www.instagram.com/bsidesgoa/"
                     target="_blank"
                     className=""
                   >
                     <img src={Instagram} alt="Instagram_Icon" />
-                  </a>
+                  </a> */}
                   <a href="https://www.facebook.com/bsidesgoa" target="_blank">
                     <img src={Facebook} alt="Facebook_icon" />
                   </a>
-                  <a href="mailto:admin@bsidesgoa.com" target="_blank">
+                  <a href="mailto:bsidesgoa@gmail.com" target="_blank">
                     <img src={Gmail} alt="Gmail_icon" />
                   </a>
                   <a
@@ -424,17 +423,17 @@ function App() {
 
               {/* Social Icons */}
               <div className="flex gap-x-8 mt-14">
-                <a
+                {/* <a
                   href="https://www.instagram.com/bsidesgoa/"
                   target="_blank"
                   className=""
                 >
                   <img src={Instagram} alt="Instagram_Icon" />
-                </a>
+                </a> */}
                 <a href="https://www.facebook.com/bsidesgoa" target="_blank">
                   <img src={Facebook} alt="Facebook_icon" />
                 </a>
-                <a href="mailto:admin@bsidesgoa.com" target="_blank">
+                <a href="mailto:bsidesgoa@gmail.com" target="_blank">
                   <img src={Gmail} alt="Gmail_icon" className="mt-[2px]" />
                 </a>
                 <a
