@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Client, Databases, ID } from "appwrite";
 import Instagram from "./assets/icons/Vector.svg";
 import Facebook from "./assets/icons/Rectangle.svg";
@@ -8,19 +8,23 @@ import Linkedin from "./assets/icons/Group.svg";
 
 function App() {
   const [isChecked, setIsChecked] = useState(false);
-  const [audioError, setAudioError] = useState(false);
 
-  const playAudio = () => {
-    const audio = new Audio("/calmloop.mp3");
+  useEffect(() => {
+    const audio = new Audio("/audio.mpeg");
 
-    audio.onerror = () => {
-      setAudioError(true);
-      console.error("Failed to load audio source.");
+    const handler = () => {
+      audio.play();
+      removeEvent();
     };
 
-    audio.play();
-    console.log("Audio Playing");
-  };
+    const removeEvent = () => {
+      document.removeEventListener("click", handler);
+    };
+
+    document.addEventListener("click", handler);
+
+    return removeEvent;
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -114,7 +118,7 @@ function App() {
     }
   };
   return (
-    <div className="App" onClick={playAudio}>
+    <div className="App">
       <div className="relative">
         {/* video */}
         <video
@@ -141,7 +145,7 @@ function App() {
           <div className="absolute mx-auto top-[50%] left-[50%] transfor translate-x-[-50%] translate-y-[-50%] w-full">
             <div className="flex justify-center mx-auto">
               <div
-                className="max-w-[800px] text-center md:text-left"
+                className="max-w-[800px] text-center md:text-left flex flex-col justify-center"
                 style={{
                   textShadow: "0px 4px  4px #00000094",
                 }}
@@ -150,7 +154,7 @@ function App() {
                   Bsides Goa 2024
                 </h1>
                 <p className="text-lg sm:text-xlg text-white-A700 font-montserrat font-semibold">
-                  <span className="border-2 border-yellow-800 w-16 sm:w-40 inline-block"></span>
+                  <span className="border-2 border-yellow-800 w-20 sm:w-32 inline-block"></span>
                   &nbsp; Security by the Beach
                 </p>
               </div>
@@ -342,18 +346,20 @@ function App() {
                       textShadow: "0px 4px  4px #00000094",
                     }}
                   >
-                    <p
-                      className="text-xlg font-medium text-shadow-ts1 text-white-A700 tracking-[7.05px] uppercase"
-                      size="txtMontserratMedium30"
-                    >
-                      BSides Goa 2024
-                    </p>
-                    <div className="md:ml-40 flex justify-center items-center mt-2">
-                      <span className="bg-yellow-800_01 w-[15%] h-[3px]"></span>
-                      &nbsp;
-                      <p className="font-medium text-yellow-800_01 font-montserrat text-lg">
-                        Security by the Beach
+                    <div className="flex flex-col justify-center items-center">
+                      <p
+                        className="text-xlg font-medium text-shadow-ts1 text-white-A700 tracking-[7.05px] uppercase"
+                        size="txtMontserratMedium30"
+                      >
+                        BSides Goa 2024
                       </p>
+                      <div className="flex items-center mt-2 min-w-[380px]">
+                        <span className="bg-yellow-800_01 w-[15%] h-[3px]"></span>
+                        &nbsp;
+                        <p className="font-medium text-yellow-800_01 font-montserrat text-lg">
+                          Security by the Beach
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col gap-[41px] items-center justify-start mt-10 w-full">
