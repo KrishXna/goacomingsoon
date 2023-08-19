@@ -58,11 +58,11 @@ function App() {
         ID.unique(),
         formDataObj
       );
-      console.log(formDataObj);
+      // console.log(formDataObj);
 
       promise.then(
         function (response) {
-          console.log(response); // Success
+          // console.log(response); // Success
 
           const form = e.target;
           form.reset();
@@ -95,17 +95,17 @@ function App() {
 
       client
         .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-        .setProject("64e0b814f305bd5fd645"); // Your project ID
+        .setProject("64e0a33e578d27304431"); // Your project ID
 
       const promise = databases.createDocument(
-        "64e0b827d964dcca3a18",
-        "64e0b82fae2c7e08f228",
+        "64e0b5345a71b49502ef",
+        "64e0bd2e7fab8d5302db",
         ID.unique(),
         formDataObj
       );
       promise.then(
         function (response) {
-          console.log(response); // Success
+          // console.log(response); // Success
           const form = e.target;
           form.reset();
         },
@@ -113,7 +113,7 @@ function App() {
           console.log(error); // Failure
         }
       );
-      console.log(formDataObj);
+      // console.log(formDataObj);
     }
   };
   return (
