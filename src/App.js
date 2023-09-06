@@ -8,9 +8,10 @@ import Linkedin from "./assets/icons/Group.svg";
 
 function App() {
   const [isChecked, setIsChecked] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const audio = new Audio("/audio.mpeg");
+    const audio = new Audio("/audio2.mp3");
 
     const handler = () => {
       audio.play();
@@ -62,6 +63,12 @@ function App() {
 
       promise.then(
         function (response) {
+          if (response.$id) {
+            setSuccess(true);
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3000);
+          }
           // console.log(response); // Success
 
           const form = e.target;
@@ -135,7 +142,7 @@ function App() {
         <div className="absolute inset-0 pl-6">
           <img
             className="relative w-36 lg:w-52 h-auto"
-            src="images/bsides-goa-logo.png"
+            src="images/logo.png"
             alt="projectaccompli"
           />
         </div>
@@ -160,55 +167,133 @@ function App() {
 
               {/* Social Icons */}
               <div className="absolute right-10 xl:right-36">
-                <div className="hidden lg:flex flex-col gap-y-8 pt-8 justify-center items-center">
-                  {/* <a
+                <div className="hidden lg:flex flex-col gap-y-8 pt-8 justify-center items-center text-lg text-yellow-300">
+                  <a
                     href="https://www.instagram.com/bsidesgoa/"
                     target="_blank"
-                    className=""
                   >
-                    <img src={Instagram} alt="Instagram_Icon" />
-                  </a> */}
-                  <a href="https://www.facebook.com/bsidesgoa" target="_blank">
-                    <img src={Facebook} alt="Facebook_icon" />
+                    <div className="w-10 h-10 rounded-full bg-black-900">
+                      <div className="flex justify-center items-center h-10">
+                        <i class="fa-brands fa-instagram"></i>
+                        {/* <img src={Instagram} alt="Instagram_Icon" /> */}
+                      </div>
+                    </div>
                   </a>
-                  <a href="mailto:bsidesgoa@gmail.com" target="_blank">
-                    <img src={Gmail} alt="Gmail_icon" />
+                  <a href="https://twitter.com/bsidesgoa">
+                    <div className="w-10 h-10 rounded-full bg-black-900">
+                      <div className="flex justify-center items-center h-10">
+                        <i class="fa-brands fa-x-twitter"></i>
+
+                        {/* <i class="fa-brands fa-x-twitter"></i> */}
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="https://www.facebook.com/bsidesgoa" target="_blank">
+                    <div className="w-10 h-10 rounded-full bg-black-900">
+                      <div className="flex justify-center items-center h-10">
+                        {/* <img src={Facebook} alt="Facebook_icon" /> */}
+                        <i class="fa-brands fa-facebook"></i>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="mailto:hello@bsidesgoa.in" target="_blank">
+                    <div className="w-10 h-10 rounded-full bg-black-900">
+                      <div className="flex justify-center items-center h-10">
+                        {/* <img src={Gmail} alt="Gmail_icon" /> */}
+                        <i class="fa-solid fa-envelope"></i>
+                      </div>
+                    </div>
                   </a>
                   <a
-                    href="https://www.linkedin.com/company/bsidesgoa/about/"
+                    href="https://www.linkedin.com/company/bsidesgoa/"
                     target="_blank"
                   >
-                    <img src={Linkedin} alt="Linkedin_icon" />
+                    <div className="w-10 h-10 rounded-full bg-black-900">
+                      <div className="flex justify-center items-center h-10">
+                        {/* <img src={Linkedin} alt="Linkedin_icon" /> */}
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </div>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            {/* </div> */}
           </div>
         </div>
-        <div className="absolute bottom-6 right-4 xl:right-32">
-          <p
-            className="mt-6 justify-end px-4 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700"
-            style={{
-              textShadow: "0px 4px  4px #00000094",
-            }}
-          >
-            Dates to be announced soon <br /> Stay tuned...
-          </p>
+        <div className="absolute bottom-6 w-full md:px-10">
+          <div className="flex justify-between items-center gap- px-4">
+            <a href="#info">
+              <div className="w-10 h-10 rounded-full bg-black-900 cursor-pointer">
+                <div className="flex justify-center items-center h-10 text-yellow-300">
+                  <i class="fa-solid fa-arrow-down"></i>
+                </div>
+              </div>
+            </a>
+            <div className="">
+              <p
+                className="justify-end px-4 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700"
+                style={{
+                  textShadow: "0px 4px  4px #00000094",
+                }}
+              >
+                Dates to be announced soon Stay tuned...
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Contact Form Section */}
-      <div>
+      <div className="relative">
+        {/* Success PopUp Message */}
+        {success && (
+          <div className="absolute w-full top-0 pointer-events-none">
+            <div className="flex justify-center items-center h-[100vh]">
+              <div class="max-w-[400px] py-10 bg-black-900 text-white-A700 shadow-3xl rounded-3xl relative">
+                <div class="flex flex-col items-center">
+                  <div class="w-14 h-14 rounded-full bg-white-A700 text-yellow-800 mb-4 flex justify-center items-center">
+                    <i class="fa-solid fa-check text-whit text-4xl"></i>
+                  </div>
+                  <h2 class="text-lg">Thankyou!</h2>
+                  <p class="px-4 text-center pt-4 text-md">
+                    Your request has been submitted successfully. We will
+                    contact you soon.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div
           className="bg-cover w-full bg-no-repeat"
           style={{
             backgroundImage: "url('images/grouplayer.png')",
           }}
         >
-          <div className="lg:flex justify-between items-center w-full gap-20 h-auto lg:px-24">
+          <div className="lg:flex justify-between items-center w-full lg:px-24">
+            {/* Form Content */}
+            <div
+              className="px-10 pt-16 lg:pb-0 font-montserrat"
+              style={{
+                textShadow: "0px 4px  4px #00000094",
+              }}
+            >
+              <div className="w-full lg:px-0">
+                <h2 className="hidde lg:bloc text-xl text-shadow-ts2 text-white-A700 uppercase xl:text-righ font-bold">
+                  Coming <br /> Soon
+                </h2>
+                {/* <h2 className="lg:hidden text-[44px] font-bold xl:text-xl text-shadow-ts2 text-white-A700 uppercase lg:text-right">
+                  Coming Soon
+                </h2> */}
+                <p className="mt-4 lg:mt-2 max-w-[500px] text-md font-semibold font-montserrat text-shadow-ts1 text-white-A700">
+                  Watch Out This Space For More News On The Biggest Cyber
+                  Security Event of 2024.
+                </p>
+              </div>
+            </div>
             {/* Form */}
-            <div className="lg:pt-44 lg:pb-44 pt-28 pb-20 sm:px-10">
+            <div className="py-16 sm:px-10">
               <div
                 className="bg-gradient
                   outline-blue_gray-400_c1 p-8 rounded-[17px] shadow-bs md:w-[28rem]"
@@ -258,16 +343,14 @@ function App() {
                         Select
                       </option>
 
-                      <option value="Interested in Sponsorship">
-                        Interested in Sponsorship
+                      <option value="Sponsorship">Sponsorship</option>
+                      <option value="Attending as Participant">
+                        Attending as Participant
                       </option>
-                      <option value="Attending as Attendee">
-                        Attending as attendee
+                      <option value="Volunteering opportunities">
+                        Volunteering opportunities
                       </option>
-                      <option value="Interested in Collaboration">
-                        Interested in Collaboration
-                      </option>
-                      <option value="Other">Other</option>
+                      <option value="Others">Others</option>
                     </select>
                     <label className="text-white-A700 mb-1 mt-4 font-semibold">
                       Your/Company LinkedIn
@@ -289,7 +372,7 @@ function App() {
                         size="txtMontserratRegular14"
                       >
                         I agree to be contacted by BSides Goa team for
-                        information about the event .
+                        information about the event
                       </p>
                     </div>
                     <button
@@ -302,32 +385,12 @@ function App() {
                 </form>
               </div>
             </div>
-            {/* Form Content */}
-            <div
-              className="px-10 flex justify-end pb-20 lg:pb-0 font-montserrat"
-              style={{
-                textShadow: "0px 4px  4px #00000094",
-              }}
-            >
-              <div className="text-white-A700 w-full lg:px-0">
-                <h2 className="hidden lg:block text-xl text-shadow-ts2 text-white-A700 uppercase xl:text-right font-bold">
-                  Coming <br /> Soon
-                </h2>
-                <h2 className="lg:hidden text-[44px] font-bold xl:text-xl text-shadow-ts2 text-white-A700 uppercase lg:text-right">
-                  Coming Soon
-                </h2>
-                <p className="mt-4 lg:mt-2 xl:ml-32 max-w-[500px] text-md font-semibold font-montserrat text-shadow-ts1 text-white-A700">
-                  Watch Out This Space For More News On The Biggest Cyber
-                  Security Event of 2024.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
       {/* Form End */}
-      <div className="w-full">
-        <div className="relative bg-cover overflow-hidden bg-gray-900 bg-no-repeat flex flex-col items-center justify-start pt-24">
+      <div className="w-full" id="info">
+        <div className="relative bg-cover overflow-hidden bg-gray-900 bg-no-repeat flex flex-col items-center justify-start pt-16">
           <div className="w-full">
             <img
               src="../images/dotsimg.png"
@@ -423,21 +486,25 @@ function App() {
 
               {/* Social Icons */}
               <div className="flex gap-x-8 mt-14">
-                {/* <a
+                <a
                   href="https://www.instagram.com/bsidesgoa/"
                   target="_blank"
                   className=""
                 >
-                  <img src={Instagram} alt="Instagram_Icon" />
-                </a> */}
+                  {/* <img src={Instagram} alt="Instagram_Icon" /> */}
+                  <i class="fa-brands fa-instagram text-white-A700 text-lg"></i>
+                </a>
+                <a href="https://twitter.com/bsidesgoa">
+                  <i class="fa-brands fa-x-twitter text-lg text-white-A700"></i>
+                </a>
                 <a href="https://www.facebook.com/bsidesgoa" target="_blank">
                   <img src={Facebook} alt="Facebook_icon" />
                 </a>
-                <a href="mailto:bsidesgoa@gmail.com" target="_blank">
+                <a href="mailto:hello@bsidesgoa.in" target="_blank">
                   <img src={Gmail} alt="Gmail_icon" className="mt-[2px]" />
                 </a>
                 <a
-                  href="https://www.linkedin.com/company/bsidesgoa/about/"
+                  href="https://www.linkedin.com/company/bsidesgoa/"
                   target="_blank"
                 >
                   <img src={Linkedin} alt="Linkedin_icon" />
