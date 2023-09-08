@@ -10,20 +10,30 @@ function App() {
   const [isChecked, setIsChecked] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  // const handlePlayAudio = () => {
+  //   if (audio.paused) {
+  //     audio.play();
+  //     setIsPlaying(true);
+  //   } else {
+  //     audio.pause();
+  //     setIsPlaying(false);
+  //   }
+  // };
+
   useEffect(() => {
     const audio = new Audio("/audio2.mp3");
-
-    const handler = () => {
+    const playAudio = () => {
       audio.play();
       removeEvent();
     };
-
-    const removeEvent = () => {
-      document.removeEventListener("click", handler);
+    const pauseAudio = () => {
+      audio.pause();
     };
-
-    document.addEventListener("click", handler);
-
+    const removeEvent = () => {
+      document.removeEventListener("click", playAudio);
+      document.addEventListener("click", pauseAudio);
+    };
+    document.addEventListener("click", playAudio);
     return removeEvent;
   }, []);
 
@@ -140,11 +150,19 @@ function App() {
         <div className="absolute inset-0 top-0 left-0 bg-yellow-800/20"></div>
         {/* logo */}
         <div className="absolute inset-0 pl-6">
+          {/* <div className="flex justify-between items-center"> */}
           <img
             className="relative w-36 lg:w-52 h-auto"
             src="images/logo.png"
             alt="projectaccompli"
           />
+          {/* <button
+            onClick={handlePlayAudio}
+            className="bg-black-900 px-4 py-1 rounded text-white-A700 block mr-10"
+          >
+            {isPlaying ? "pause" : "play"}
+          </button> */}
+          {/* </div> */}
         </div>
         {/* Hero Text */}
         <div className="reative w-full">
@@ -166,10 +184,10 @@ function App() {
               </div>
 
               {/* Social Icons */}
-              <div className="absolute right-10 xl:right-36">
+              <div className="absolute top-[50%] translate-y-[-50%] right-10 xl:right-36">
                 <div className="hidden lg:flex flex-col gap-y-8 pt-8 justify-center items-center text-lg text-yellow-300">
                   <a
-                    href="https://www.instagram.com/bsidesgoa/"
+                    href="https://www.instagram.com/bsides_goa/"
                     target="_blank"
                   >
                     <div className="w-10 h-10 rounded-full bg-black-900">
@@ -179,7 +197,7 @@ function App() {
                       </div>
                     </div>
                   </a>
-                  <a href="https://twitter.com/bsidesgoa">
+                  <a href="https://twitter.com/bsidesgoa" target="_blank">
                     <div className="w-10 h-10 rounded-full bg-black-900">
                       <div className="flex justify-center items-center h-10">
                         <i class="fa-brands fa-x-twitter"></i>
@@ -223,7 +241,7 @@ function App() {
         </div>
         <div className="absolute bottom-6 w-full md:px-10">
           <div className="flex justify-between items-center gap- px-4">
-            <a href="#info">
+            <a href="#contact" className="transition delay-200 duration-1000">
               <div className="w-10 h-10 rounded-full bg-black-900 cursor-pointer">
                 <div className="flex justify-center items-center h-10 text-yellow-300">
                   <i class="fa-solid fa-arrow-down"></i>
@@ -232,7 +250,7 @@ function App() {
             </a>
             <div className="">
               <p
-                className="justify-end px-4 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700"
+                className="justify-end px-4 lg:mt-0 font-montserrat font-medium italic text-shadow-ts text-md text-white-A700 xl:mr-20"
                 style={{
                   textShadow: "0px 4px  4px #00000094",
                 }}
@@ -245,7 +263,7 @@ function App() {
       </div>
 
       {/* Contact Form Section */}
-      <div className="relative">
+      <div className="relative" id="contact">
         {/* Success PopUp Message */}
         {success && (
           <div className="absolute w-full top-0 pointer-events-none">
@@ -268,7 +286,7 @@ function App() {
         <div
           className="bg-cover w-full bg-no-repeat"
           style={{
-            backgroundImage: "url('images/grouplayer.png')",
+            backgroundImage: "url('images/bsidesgoa-bg.png')",
           }}
         >
           <div className="lg:flex justify-between items-center w-full lg:px-24">
@@ -280,7 +298,7 @@ function App() {
               }}
             >
               <div className="w-full lg:px-0">
-                <h2 className="hidde lg:bloc text-xl text-shadow-ts2 text-white-A700 uppercase xl:text-righ font-bold">
+                <h2 className="text-xl text-shadow-ts2 text-white-A700 uppercase xl:text-righ font-bold">
                   Coming <br /> Soon
                 </h2>
                 {/* <h2 className="lg:hidden text-[44px] font-bold xl:text-xl text-shadow-ts2 text-white-A700 uppercase lg:text-right">
@@ -298,7 +316,11 @@ function App() {
                 className="bg-gradient
                   outline-blue_gray-400_c1 p-8 rounded-[17px] shadow-bs md:w-[28rem]"
               >
-                <form className="font-montserrat" onSubmit={handleSubmit}>
+                <form
+                  className="font-montserrat"
+                  onSubmit={handleSubmit}
+                  autoComplete="off"
+                >
                   <h2 className="text-center text-white-A700 mb-6 uppercase font-semibold text-lg pb-2 tracking-[4.10px]">
                     Let&apos;s Connect
                   </h2>
@@ -309,6 +331,8 @@ function App() {
                     <input
                       name="name"
                       type="text"
+                      pattern="[a-zA-Z]{3,}"
+                      title="Invalid Full Name"
                       // placeholder="e.g. Sachin Tendulkar"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
@@ -319,6 +343,7 @@ function App() {
                     <input
                       name="email"
                       type="email"
+                      title="Invalid Email"
                       // placeholder="e.g. xyz@gmail.com"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
@@ -327,7 +352,9 @@ function App() {
                     </label>
                     <input
                       name="contactno"
-                      type="number"
+                      type="text"
+                      pattern="[0-9]{9,13}"
+                      title="Invalid Contact Number"
                       // placeholder="e.g.9876543210"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
@@ -467,7 +494,11 @@ function App() {
                   Let&apos;s connect
                 </h2>
                 <div className="border rounded-full mt-14 p-2 bg-blue_gray-100 relative">
-                  <form onSubmit={handleNewsletter} className="flex">
+                  <form
+                    onSubmit={handleNewsletter}
+                    className="flex"
+                    autoComplete="off"
+                  >
                     <input
                       name="email"
                       type="email"
@@ -487,14 +518,14 @@ function App() {
               {/* Social Icons */}
               <div className="flex gap-x-8 mt-14">
                 <a
-                  href="https://www.instagram.com/bsidesgoa/"
+                  href="https://www.instagram.com/bsides_goa/"
                   target="_blank"
                   className=""
                 >
                   {/* <img src={Instagram} alt="Instagram_Icon" /> */}
                   <i class="fa-brands fa-instagram text-white-A700 text-lg"></i>
                 </a>
-                <a href="https://twitter.com/bsidesgoa">
+                <a href="https://twitter.com/bsidesgoa" target="_blank">
                   <i class="fa-brands fa-x-twitter text-lg text-white-A700"></i>
                 </a>
                 <a href="https://www.facebook.com/bsidesgoa" target="_blank">
