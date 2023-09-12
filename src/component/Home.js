@@ -488,10 +488,10 @@ export default function Home() {
                     <div className="flex items-end gap-x-2 text-white-A700 mb-1 mt-4  font-semibold">
                       <div className="w-1/3 h-12 border relative rounded overflow-hidden">
                         <div
-                          className="absolute right-1 cursor-pointer"
+                          className="absolute right-1 -top-1 cursor-pointer"
                           onClick={generateCaptcha}
                         >
-                          <i class="fa-solid fa-arrows-rotate text-black-900"></i>
+                          <i class="fa-solid fa-arrows-rotate text-black-900 text-sm"></i>
                         </div>
                         <div className="flex justify-center items-center h-full bg-white-A700">
                           <canvas id="captcha">
