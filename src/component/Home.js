@@ -228,7 +228,7 @@ export default function Home() {
     ctx.font = "22px Arial";
     ctx.fillText(
       captchaText,
-      captchaCanvas.width / 3,
+      captchaCanvas.width / 2.8,
       captchaCanvas.height / 1.7
     );
   };
