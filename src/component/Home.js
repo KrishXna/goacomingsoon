@@ -535,17 +535,19 @@ export default function Home() {
                     {/*  */}
                     <div className="flex font-montserrat flex-row gap-[18px] justify-start mt-5 md:w-full">
                       <input
+                        id="checked"
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => setIsChecked(!isChecked)}
                       />
-                      <p
+                      <label
+                        for="checked"
                         className="text-sm font-normal text-white-A700 tracking-[0.35px] sm:w-full"
                         size="txtMontserratRegular14"
                       >
                         I agree to be contacted by BSides Goa team for
                         information about the event
-                      </p>
+                      </label>
                     </div>
                     <button
                       type="submit"
