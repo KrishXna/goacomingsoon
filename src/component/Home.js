@@ -510,7 +510,10 @@ export default function Home() {
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
                     {/* Captcha  */}
-                    <div className="flex items-end gap-x-2 text-white-A700 mb-1 mt-4  font-semibold">
+                    <label className="text-white-A700 mb-1 mt-4 font-semibold">
+                      Captcha
+                    </label>
+                    <div className="flex items-end gap-x-2 text-white-A700 mb-1 font-semibold">
                       <div className="w-1/3 h-12 border relative rounded overflow-hidden">
                         <div
                           className="absolute right-1 -top-1 cursor-pointer"
