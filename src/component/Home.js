@@ -494,7 +494,7 @@ export default function Home() {
                           <i class="fa-solid fa-arrows-rotate text-black-900 text-sm"></i>
                         </div>
                         <div className="flex justify-center items-center h-full bg-white-A700">
-                          <canvas id="captcha">
+                          <canvas id="captcha" className="w-60 sm:w-full">
                             <img src={canavasImg} />
                           </canvas>
                         </div>
