@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Client, Databases, ID } from "appwrite";
 import Facebook from "../assets/icons/Rectangle.svg";
 import Gmail from "../assets/icons/email_svgrepo.com.svg";
@@ -9,6 +9,8 @@ import BackgroundImg from "../assets/images/bsidesgoa-bg.png";
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [canavasImg, setCanavasImg] = useState("");
+  const [cText, setcText] = useState("");
 
   useEffect(() => {
     const audio = new Audio("/audio2.mp3");
@@ -27,6 +29,14 @@ export default function Home() {
     return removeEvent;
   }, []);
 
+  const inpRef = useRef();
+
+  const clearField = () => {
+    if (inpRef.current) {
+      inpRef.current.value = "";
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,10 +51,20 @@ export default function Home() {
     formData.forEach(function (value, key) {
       formDataObj[key] = value;
     });
-    const { name, email, contactno, interested, companyname } = formDataObj;
+    const { name, email, contactno, interested, companyname, captchaText } =
+      formDataObj;
 
-    if (!name || !email || !contactno || !interested || !companyname) {
+    if (
+      !name ||
+      !email ||
+      !contactno ||
+      !interested ||
+      !companyname ||
+      !captchaText
+    ) {
       alert("All fields are required");
+    } else if (captchaText !== cText) {
+      alert("Invalid Captcha");
     } else {
       const client = new Client();
       const databases = new Databases(client);
@@ -52,6 +72,7 @@ export default function Home() {
       client
         .setEndpoint("https://cloud.appwrite.io/v1")
         .setProject("64e0a33e578d27304431");
+      delete formDataObj.captchaText;
 
       const promise = databases.createDocument(
         "64e0b5345a71b49502ef",
@@ -68,6 +89,8 @@ export default function Home() {
             setTimeout(() => {
               setSuccess(false);
             }, 3000);
+            generateCaptcha();
+            clearField();
           }
           // console.log(response); // Success
 
@@ -124,6 +147,95 @@ export default function Home() {
     }
   };
 
+  const generateCaptcha = () => {
+    const alphaNums = [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+    ];
+    let emptyArr = [];
+    let captchaText;
+
+    for (let i = 1; i <= 6; i++) {
+      emptyArr.push(alphaNums[Math.floor(Math.random() * alphaNums.length)]);
+    }
+    const captchaCanvas = document.querySelector("#captcha");
+    let ctx = captchaCanvas.getContext("2d");
+    const dataURI = captchaCanvas.toDataURL();
+    setCanavasImg(dataURI);
+    captchaText = emptyArr.join("");
+    setcText(captchaText);
+    ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+    ctx.font = "22px Arial";
+    ctx.fillText(
+      captchaText,
+      captchaCanvas.width / 3,
+      captchaCanvas.height / 1.7
+    );
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
   return (
     <>
       <div className="relative">
@@ -141,19 +253,11 @@ export default function Home() {
         <div className="absolute inset-0 top-0 left-0 bg-yellow-800/20"></div>
         {/* logo */}
         <div className="absolute inset-0 pl-6">
-          {/* <div className="flex justify-between items-center"> */}
           <img
             className="relative w-36 lg:w-52 h-auto"
             src={Logo}
             alt="projectaccompli"
           />
-          {/* <button
-            onClick={handlePlayAudio}
-            className="bg-black-900 px-4 py-1 rounded text-white-A700 block mr-10"
-          >
-            {isPlaying ? "pause" : "play"}
-          </button> */}
-          {/* </div> */}
         </div>
         {/* Hero Text */}
         <div className="reative w-full">
@@ -246,7 +350,7 @@ export default function Home() {
                   textShadow: "0px 4px  4px #00000094",
                 }}
               >
-                Dates to be announced soon Stay tuned...
+                Dates to be announced soon. Stay tuned...
               </p>
             </div>
           </div>
@@ -324,6 +428,7 @@ export default function Home() {
                       type="text"
                       pattern="[a-zA-Z/s]{3,}"
                       title="Invalid Full Name"
+                      required
                       // placeholder="e.g. Sachin Tendulkar"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
@@ -379,6 +484,29 @@ export default function Home() {
                       // placeholder="@google"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
+                    {/* Captcha  */}
+                    <div className="flex items-end gap-x-2 text-white-A700 mb-1 mt-4  font-semibold">
+                      <div className="w-1/3 h-12 border relative rounded overflow-hidden">
+                        <div
+                          className="absolute right-1 cursor-pointer"
+                          onClick={generateCaptcha}
+                        >
+                          <i class="fa-solid fa-arrows-rotate text-black-900"></i>
+                        </div>
+                        <div className="flex justify-center items-center h-full bg-white-A700">
+                          <canvas id="captcha">
+                            <img src={canavasImg} />
+                          </canvas>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        className="w-2/3 outline-none border-b h-12 bg-transparent"
+                        name="captchaText"
+                        ref={inpRef}
+                      />
+                    </div>
+                    {/*  */}
                     <div className="flex font-montserrat flex-row gap-[18px] justify-start mt-5 md:w-full">
                       <input
                         type="checkbox"
