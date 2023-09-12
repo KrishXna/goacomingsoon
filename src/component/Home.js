@@ -662,7 +662,7 @@ export default function Home() {
               </div>
 
               {/* Social Icons */}
-              <div className="flex gap-x-8 mt-14">
+              <div className="flex gap-x-8 mt-8">
                 <a
                   href="https://www.instagram.com/bsides_goa/"
                   target="_blank"
