@@ -104,48 +104,67 @@ export default function Home() {
     }
   };
 
-  const handleNewsletter = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(formData);
+  // const drawLine = (ctx, x1, y1, x2, y2, stroke = "black", width = 10) => {
+  //   // start a new path
+  //   ctx.beginPath();
 
-    const formDataObj = {};
+  //   // place the cursor from the point the line should be started
+  //   ctx.moveTo(x1, y1);
 
-    formData.forEach(function (value, key) {
-      formDataObj[key] = value;
-    });
+  //   // draw a line from current cursor position to the provided x,y coordinate
+  //   ctx.lineTo(x2, y2);
 
-    const { email } = formDataObj;
-    if (!email) {
-      alert("Field Required");
-    } else {
-      const client = new Client();
+  //   // set strokecolor
+  //   ctx.strokeStyle = stroke;
 
-      const databases = new Databases(client);
+  //   // set lineWidht
+  //   ctx.lineWidth = width;
 
-      client
-        .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-        .setProject("64e0a33e578d27304431"); // Your project ID
+  //   // add stroke to the line
+  //   ctx.stroke();
+  // };
+  // const handleNewsletter = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   console.log(formData);
 
-      const promise = databases.createDocument(
-        "64e0b5345a71b49502ef",
-        "64e0bd2e7fab8d5302db",
-        ID.unique(),
-        formDataObj
-      );
-      promise.then(
-        function (response) {
-          // console.log(response); // Success
-          const form = e.target;
-          form.reset();
-        },
-        function (error) {
-          console.log(error); // Failure
-        }
-      );
-      // console.log(formDataObj);
-    }
-  };
+  //   const formDataObj = {};
+
+  //   formData.forEach(function (value, key) {
+  //     formDataObj[key] = value;
+  //   });
+
+  //   const { email } = formDataObj;
+  //   if (!email) {
+  //     alert("Field Required");
+  //   } else {
+  //     const client = new Client();
+
+  //     const databases = new Databases(client);
+
+  //     client
+  //       .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
+  //       .setProject("64e0a33e578d27304431"); // Your project ID
+
+  //     const promise = databases.createDocument(
+  //       "64e0b5345a71b49502ef",
+  //       "64e0bd2e7fab8d5302db",
+  //       ID.unique(),
+  //       formDataObj
+  //     );
+  //     promise.then(
+  //       function (response) {
+  //         // console.log(response); // Success
+  //         const form = e.target;
+  //         // form.reset();
+  //       },
+  //       function (error) {
+  //         console.log(error); // Failure
+  //       }
+  //     );
+  //     // console.log(formDataObj);
+  //   }
+  // };
 
   const generateCaptcha = () => {
     const alphaNums = [
@@ -224,7 +243,13 @@ export default function Home() {
     setCanavasImg(dataURI);
     captchaText = emptyArr.join("");
     setcText(captchaText);
+
     ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+    ctx.beginPath();
+    ctx.moveTo(0, 70);
+    ctx.lineTo(1000, 150);
+    ctx.stroke();
+
     ctx.font = "22px Arial";
     ctx.fillText(
       captchaText,
@@ -493,7 +518,7 @@ export default function Home() {
                         >
                           <i class="fa-solid fa-arrows-rotate text-black-900 text-sm"></i>
                         </div>
-                        <div className="flex justify-center items-center h-full bg-white-A700">
+                        <div className="flex justify-center items-center h-full  bg-blue_gray-100">
                           <canvas id="captcha" className="w-60 sm:w-96">
                             <img src={canavasImg} />
                           </canvas>
@@ -501,7 +526,8 @@ export default function Home() {
                       </div>
                       <input
                         type="text"
-                        className="w-2/3 outline-none border-b h-12 bg-transparent"
+                        // className="w-2/3 outline-none border-b h-12 bg-transparent"
+                        className="h-12 pl-4 w-2/3 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                         name="captchaText"
                         ref={inpRef}
                       />
@@ -612,7 +638,7 @@ export default function Home() {
                 <h2 className="text-center mt-14 sm:text-lg font-montserrat font-medium text-white-A700 tracking-[12px] uppercase">
                   Let&apos;s connect
                 </h2>
-                <div className="border rounded-full mt-14 p-2 bg-blue_gray-100 relative">
+                {/* <div className="border rounded-full mt-14 p-2 bg-blue_gray-100 relative">
                   <form
                     onSubmit={handleNewsletter}
                     className="flex"
@@ -632,7 +658,7 @@ export default function Home() {
                       Subscribe
                     </button>
                   </form>
-                </div>
+                </div> */}
               </div>
 
               {/* Social Icons */}
