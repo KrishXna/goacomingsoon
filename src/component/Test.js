@@ -23,7 +23,7 @@ const Test = () => {
 
         <ReCAPTCHA
           ref={recaptchaRef}
-          //   size="invisible"
+          size="invisible"
           sitekey="6Lde7x8oAAAAAAMKkGZ4AyvyP1if3fe60y5mcEB9"
         />
       </form>
