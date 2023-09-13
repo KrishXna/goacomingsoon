@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Page from "../src/component/Home";
 import Redirect from "../src/component/Redirect";
-
+import Test from "../src/component/Test";
 // import Facebook from "./assets/icons/Rectangle.svg";
 // import Gmail from "./assets/icons/email_svgrepo.com.svg";
 // import Linkedin from "./assets/icons/Group.svg";
@@ -34,6 +34,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Page />} />
+        <Route path="/test" element={<Test />} />
+
         <Route path="*" element={<Redirect />} />
       </Routes>
     </BrowserRouter>

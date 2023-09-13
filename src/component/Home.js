@@ -71,7 +71,7 @@ export default function Home() {
 
       client
         .setEndpoint("https://cloud.appwrite.io/v1")
-        .setProject("64e0a33e578d27304431");
+        .setProject("64e0a33e578d27304431@");
       delete formDataObj.captchaText;
 
       const promise = databases.createDocument(
@@ -80,7 +80,7 @@ export default function Home() {
         ID.unique(),
         formDataObj
       );
-      // console.log(formDataObj);
+      console.log(formDataObj);
 
       promise.then(
         function (response) {
@@ -104,25 +104,6 @@ export default function Home() {
     }
   };
 
-  // const drawLine = (ctx, x1, y1, x2, y2, stroke = "black", width = 10) => {
-  //   // start a new path
-  //   ctx.beginPath();
-
-  //   // place the cursor from the point the line should be started
-  //   ctx.moveTo(x1, y1);
-
-  //   // draw a line from current cursor position to the provided x,y coordinate
-  //   ctx.lineTo(x2, y2);
-
-  //   // set strokecolor
-  //   ctx.strokeStyle = stroke;
-
-  //   // set lineWidht
-  //   ctx.lineWidth = width;
-
-  //   // add stroke to the line
-  //   ctx.stroke();
-  // };
   // const handleNewsletter = (e) => {
   //   e.preventDefault();
   //   const formData = new FormData(e.target);
@@ -465,6 +446,7 @@ export default function Home() {
                       name="email"
                       type="email"
                       title="Invalid Email"
+                      required
                       // placeholder="e.g. xyz@gmail.com"
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
