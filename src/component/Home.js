@@ -5,13 +5,22 @@ import Gmail from "../assets/icons/email_svgrepo.com.svg";
 import Linkedin from "../assets/icons/Group.svg";
 import Logo from "../assets/images/logo.png";
 import BackgroundImg from "../assets/images/bsidesgoa-bg.png";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
   const [success, setSuccess] = useState(false);
   const [canavasImg, setCanavasImg] = useState("");
   const [cText, setcText] = useState("");
+  const [captcha, setCaptcha] = useState("");
 
+  const recaptchaRef = React.useRef();
+  let token;
+  const onSubmitWithReCAPTCHA = async () => {
+    token = await recaptchaRef.current.getValue();
+    // console.log({ token });
+    // setCaptcha(token);
+  };
   useEffect(() => {
     const audio = new Audio("/audio2.mp3");
     const playAudio = () => {
@@ -39,9 +48,14 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmitWithReCAPTCHA();
 
     if (!isChecked) {
       alert("Please agree to the terms before submitting.");
+      return;
+    }
+    if (!token) {
+      alert("Captcha Required");
       return;
     }
 
@@ -51,28 +65,18 @@ export default function Home() {
     formData.forEach(function (value, key) {
       formDataObj[key] = value;
     });
-    const { name, email, contactno, interested, companyname, captchaText } =
-      formDataObj;
+    const { name, email, contactno, interested, companyname } = formDataObj;
 
-    if (
-      !name ||
-      !email ||
-      !contactno ||
-      !interested ||
-      !companyname ||
-      !captchaText
-    ) {
+    if (!name || !email || !contactno || !interested || !companyname) {
       alert("All fields are required");
-    } else if (captchaText !== cText) {
-      alert("Invalid Captcha");
     } else {
       const client = new Client();
       const databases = new Databases(client);
 
       client
         .setEndpoint("https://cloud.appwrite.io/v1")
-        .setProject("64e0a33e578d27304431@");
-      delete formDataObj.captchaText;
+        .setProject("64e0a33e578d27304431");
+      delete formDataObj["g-recaptcha-response"];
 
       const promise = databases.createDocument(
         "64e0b5345a71b49502ef",
@@ -80,7 +84,7 @@ export default function Home() {
         ID.unique(),
         formDataObj
       );
-      console.log(formDataObj);
+      // console.log(formDataObj);
 
       promise.then(
         function (response) {
@@ -89,13 +93,14 @@ export default function Home() {
             setTimeout(() => {
               setSuccess(false);
             }, 3000);
-            generateCaptcha();
+            // generateCaptcha();
             clearField();
           }
           // console.log(response); // Success
 
           const form = e.target;
           // form.reset();
+          token = "";
         },
         function (error) {
           console.log(error); // Failure
@@ -147,101 +152,101 @@ export default function Home() {
   //   }
   // };
 
-  const generateCaptcha = () => {
-    const alphaNums = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f",
-      "g",
-      "h",
-      "i",
-      "j",
-      "k",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "q",
-      "r",
-      "s",
-      "t",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z",
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-    ];
-    let emptyArr = [];
-    let captchaText;
+  // const generateCaptcha = () => {
+  //   const alphaNums = [
+  //     "A",
+  //     "B",
+  //     "C",
+  //     "D",
+  //     "E",
+  //     "F",
+  //     "G",
+  //     "H",
+  //     "I",
+  //     "J",
+  //     "K",
+  //     "L",
+  //     "M",
+  //     "N",
+  //     "O",
+  //     "P",
+  //     "Q",
+  //     "R",
+  //     "S",
+  //     "T",
+  //     "U",
+  //     "V",
+  //     "W",
+  //     "X",
+  //     "Y",
+  //     "Z",
+  //     "a",
+  //     "b",
+  //     "c",
+  //     "d",
+  //     "e",
+  //     "f",
+  //     "g",
+  //     "h",
+  //     "i",
+  //     "j",
+  //     "k",
+  //     "l",
+  //     "m",
+  //     "n",
+  //     "o",
+  //     "p",
+  //     "q",
+  //     "r",
+  //     "s",
+  //     "t",
+  //     "u",
+  //     "v",
+  //     "w",
+  //     "x",
+  //     "y",
+  //     "z",
+  //     "0",
+  //     "1",
+  //     "2",
+  //     "3",
+  //     "4",
+  //     "5",
+  //     "6",
+  //     "7",
+  //     "8",
+  //     "9",
+  //   ];
+  //   let emptyArr = [];
+  //   let captchaText;
 
-    for (let i = 1; i <= 6; i++) {
-      emptyArr.push(alphaNums[Math.floor(Math.random() * alphaNums.length)]);
-    }
-    const captchaCanvas = document.querySelector("#captcha");
-    let ctx = captchaCanvas.getContext("2d");
-    const dataURI = captchaCanvas.toDataURL();
-    setCanavasImg(dataURI);
-    captchaText = emptyArr.join("");
-    setcText(captchaText);
+  //   for (let i = 1; i <= 6; i++) {
+  //     emptyArr.push(alphaNums[Math.floor(Math.random() * alphaNums.length)]);
+  //   }
+  //   const captchaCanvas = document.querySelector("#captcha");
+  //   let ctx = captchaCanvas.getContext("2d");
+  //   const dataURI = captchaCanvas.toDataURL();
+  //   setCanavasImg(dataURI);
+  //   captchaText = emptyArr.join("");
+  //   setcText(captchaText);
 
-    ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
-    ctx.beginPath();
-    ctx.moveTo(0, 70);
-    ctx.lineTo(1000, 150);
-    ctx.stroke();
+  //   ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+  //   ctx.beginPath();
+  //   ctx.moveTo(0, 70);
+  //   ctx.lineTo(1000, 150);
+  //   ctx.stroke();
 
-    ctx.font = "22px Arial";
-    ctx.fillText(
-      captchaText,
-      captchaCanvas.width / 2.8,
-      captchaCanvas.height / 1.7
-    );
-  };
+  //   ctx.font = "22px Arial";
+  //   ctx.fillText(
+  //     captchaText,
+  //     captchaCanvas.width / 2.8,
+  //     captchaCanvas.height / 1.7
+  //   );
+  // };
 
-  useEffect(() => {
-    generateCaptcha();
-  }, []);
+  // useEffect(() => {
+  //   generateCaptcha();
+  // }, []);
   return (
     <>
       <div className="relative">
@@ -492,7 +497,7 @@ export default function Home() {
                       className="h-12 pl-4 bg-blue_gray-100 outline-none rounded-lg leading-[normal] p-0 placeholder:text-blue_gray-900 text-blue_gray-900"
                     />
                     {/* Captcha  */}
-                    <label className="text-white-A700 mb-1 mt-4 font-semibold">
+                    {/* <label className="text-white-A700 mb-1 mt-4 font-semibold">
                       Captcha
                     </label>
                     <div className="flex items-end gap-x-2 text-white-A700 mb-1 font-semibold">
@@ -516,7 +521,13 @@ export default function Home() {
                         name="captchaText"
                         ref={inpRef}
                       />
-                    </div>
+                    </div> */}
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      size="visible"
+                      sitekey="6Lde7x8oAAAAAAMKkGZ4AyvyP1if3fe60y5mcEB9"
+                      className="mt-4"
+                    />
                     {/*  */}
                     <div className="flex font-montserrat flex-row gap-[18px] justify-start mt-5 md:w-full">
                       <input
